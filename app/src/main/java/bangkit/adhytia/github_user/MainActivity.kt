@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,8 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (supportActionBar != null)
-            supportActionBar?.hide()
+        supportActionBar?.hide()
 
         binding.rvUsers.setHasFixedSize(true)
         gridUserAdapter = GridUserAdapter()
@@ -34,6 +34,41 @@ class MainActivity : AppCompatActivity() {
 
         showLoading(true)
         viewModel.getUserList()
+
+        observeUserList(viewModel)
+        observeUser(viewModel)
+
+        setSearchView()
+
+        showRecyclerGrid()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.searchView?.clearFocus()
+    }
+
+    private fun setSearchView() {
+        binding.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                if (p0.isNullOrBlank()) {
+                    viewModel.getUserList()
+                } else {
+                    viewModel.getUserByUsername(p0)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0.isNullOrBlank()) {
+                    viewModel.getUserList()
+                }
+                return false
+            }
+        })
+    }
+
+    private fun observeUserList(viewModel: MainViewModel) {
         viewModel.userList.observe(this, { response ->
             showLoading(false)
             if (response.isSuccessful) {
@@ -44,7 +79,9 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Error", response.errorBody().toString())
             }
         })
+    }
 
+    private fun observeUser(viewModel: MainViewModel) {
         viewModel.user.observe(this, { response ->
             showLoading(false)
             if (response.isSuccessful) {
@@ -55,8 +92,6 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Error", response.errorBody().toString())
             }
         })
-
-        showRecyclerGrid()
     }
 
     private fun verifyUserData(user: User?): User? {
@@ -65,7 +100,6 @@ class MainActivity : AppCompatActivity() {
         user?.location = if (user?.location == null) "" else user.location
         return user
     }
-
 
     private fun showRecyclerGrid() {
         binding.rvUsers.layoutManager = GridLayoutManager(this, 2)
@@ -87,9 +121,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showLoading(state: Boolean) {
         if (state) {
-            binding.progressBar!!.visibility = View.VISIBLE
+            binding.progressBar?.visibility = View.VISIBLE
         } else {
-            binding.progressBar!!.visibility = View.GONE
+            binding.progressBar?.visibility = View.GONE
         }
     }
 }
