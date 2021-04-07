@@ -3,6 +3,7 @@ package bangkit.adhytia.github_user
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,12 +28,14 @@ class MainActivity : AppCompatActivity() {
         binding.rvUsers.setHasFixedSize(true)
         gridUserAdapter = GridUserAdapter()
 
-
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+
+        showLoading(true)
         viewModel.getUserList()
         viewModel.userList.observe(this, { response ->
+            showLoading(false)
             if (response.isSuccessful) {
                 gridUserAdapter.setUserList(response.body() as ArrayList<User>)
                 Log.d("Response", response.body().toString())
@@ -43,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.user.observe(this, { response ->
+            showLoading(false)
             if (response.isSuccessful) {
                 val user = verifyUserData(response.body())
                 moveToDetailsPage(user!!)
@@ -69,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         gridUserAdapter.setOnItemClickCallback(object : GridUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
+                showLoading(true)
                 viewModel.getUserByUsername(data.username)
             }
         })
@@ -78,5 +83,13 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this@MainActivity, DetailUserActivity::class.java)
         intent.putExtra(DetailUserActivity.EXTRA_USER, user)
         startActivity(intent)
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.progressBar!!.visibility = View.VISIBLE
+        } else {
+            binding.progressBar!!.visibility = View.GONE
+        }
     }
 }
