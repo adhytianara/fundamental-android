@@ -3,6 +3,9 @@ package bangkit.adhytia.github_user
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import bangkit.adhytia.github_user.databinding.ActivityDetailUserBinding
+import bangkit.adhytia.github_user.model.User
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 class DetailUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUserBinding
@@ -22,14 +25,15 @@ class DetailUserActivity : AppCompatActivity() {
 
         binding.tvName.text = user.name
         binding.tvUsername.text = user.username
-        val resourceId: Int =
-            resources.getIdentifier(user.avatar, "drawable", packageName)
-        binding.imgAvatar.setImageResource(resourceId)
+        Glide.with(this)
+            .load(user.avatar)
+            .apply(RequestOptions().override(80, 80))
+            .into(binding.imgAvatar)
         binding.tvCompany.text = user.company
         binding.tvLocation.text = user.location
         binding.tvCompany.text = user.company
         "${user.repository} repository".also { binding.tvRepository.text = it }
-        "${user.follower} follower".also { binding.tvFollower.text = it }
+        "${user.followers} follower".also { binding.tvFollower.text = it }
         "${user.following} following".also { binding.tvFollowing.text = it }
     }
 }

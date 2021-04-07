@@ -1,27 +1,28 @@
 package bangkit.adhytia.github_user
 
-import android.content.res.Resources
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import bangkit.adhytia.github_user.databinding.ItemRowBinding
+import bangkit.adhytia.github_user.model.User
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
-class GridUserAdapter(private val listUser: ArrayList<User>) :
+class GridUserAdapter() :
     RecyclerView.Adapter<GridUserAdapter.GridViewHolder>() {
+
+    private var listUser: List<User> = emptyList()
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     class GridViewHolder(private val binding: ItemRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
-            with (binding) {
-                val resources: Resources = itemView.context.resources
-                val resourceId: Int =
-                    resources.getIdentifier(user.avatar, "drawable", itemView.context.packageName)
-                imgPhoto.setImageResource(resourceId)
+            with(binding) {
+                Glide.with(itemView.context)
+                    .load(user.avatar)
+                    .apply(RequestOptions().override(80, 80))
+                    .into(imgPhoto)
                 tvName.text = user.name
                 tvUsername.text = user.username
             }
@@ -44,6 +45,11 @@ class GridUserAdapter(private val listUser: ArrayList<User>) :
 
     override fun getItemCount(): Int {
         return listUser.size
+    }
+
+    fun setUserList(listUser: ArrayList<User>) {
+        this.listUser = listUser
+        notifyDataSetChanged()
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
