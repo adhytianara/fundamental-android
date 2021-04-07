@@ -34,15 +34,14 @@ class DetailUserActivity : AppCompatActivity() {
         title = user.name
 
         setUserData(user)
-        setupViewPager()
+        setupViewPager(user.username)
     }
 
-    private fun setupViewPager() {
+    private fun setupViewPager(username: String) {
         val sectionsPagerAdapter = SectionsPagerAdapter(this)
-        val viewPager: ViewPager2 = findViewById(R.id.view_pager)
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = findViewById(R.id.tabs)
-        TabLayoutMediator(tabs, viewPager) { tab, position ->
+        sectionsPagerAdapter.username = username
+        binding.viewPager.adapter = sectionsPagerAdapter
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
         supportActionBar?.elevation = 0f
