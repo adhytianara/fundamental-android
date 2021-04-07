@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         observeUserList(viewModel)
         observeUser(viewModel)
+        observeUserSearchResult(viewModel)
 
         setSearchView()
 
@@ -51,16 +52,18 @@ class MainActivity : AppCompatActivity() {
     private fun setSearchView() {
         binding.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
+                showLoading(true)
                 if (p0.isNullOrBlank()) {
                     viewModel.getUserList()
                 } else {
-                    viewModel.getUserByUsername(p0)
+                    viewModel.searchUserByUsername(p0)
                 }
                 return true
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
                 if (p0.isNullOrBlank()) {
+                    showLoading(true)
                     viewModel.getUserList()
                 }
                 return false
@@ -94,6 +97,18 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    private fun observeUserSearchResult(viewModel: MainViewModel) {
+        viewModel.userSearchResult.observe(this, { response ->
+            showLoading(false)
+            if (response.isSuccessful) {
+                gridUserAdapter.setUserList(response.body()?.userList as ArrayList<User>)
+                Log.d("Response", response.body().toString())
+            } else {
+                Log.e("Error", response.errorBody().toString())
+            }
+        })
+    }
+
     private fun verifyUserData(user: User?): User? {
         user?.name = if (user?.name == null) "" else user.name
         user?.company = if (user?.company == null) "" else user.company
@@ -108,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         gridUserAdapter.setOnItemClickCallback(object : GridUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
                 showLoading(true)
-                viewModel.getUserByUsername(data.username)
+                viewModel.getUserDetailsByUsername(data.username)
             }
         })
     }
