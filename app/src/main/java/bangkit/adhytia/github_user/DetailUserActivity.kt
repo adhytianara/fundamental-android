@@ -1,17 +1,27 @@
 package bangkit.adhytia.github_user
 
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
 import bangkit.adhytia.github_user.databinding.ActivityDetailUserBinding
 import bangkit.adhytia.github_user.model.User
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUserBinding
 
     companion object {
         const val EXTRA_USER = "extra_user"
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.tab_text_1,
+            R.string.tab_text_2
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +33,22 @@ class DetailUserActivity : AppCompatActivity() {
         val user = intent.getParcelableExtra<User>(EXTRA_USER)
         title = user.name
 
+        setUserData(user)
+        setupViewPager()
+    }
+
+    private fun setupViewPager() {
+        val sectionsPagerAdapter = SectionsPagerAdapter(this)
+        val viewPager: ViewPager2 = findViewById(R.id.view_pager)
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = findViewById(R.id.tabs)
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
+        supportActionBar?.elevation = 0f
+    }
+
+    private fun setUserData(user: User) {
         binding.tvName.text = user.name
         binding.tvUsername.text = user.username
         Glide.with(this)
