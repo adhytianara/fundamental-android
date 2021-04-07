@@ -1,4 +1,4 @@
-package bangkit.adhytia.github_user
+package bangkit.adhytia.github_user.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,14 +1,14 @@
-package bangkit.adhytia.github_user
+package bangkit.adhytia.github_user.view
 
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
+import bangkit.adhytia.github_user.R
+import bangkit.adhytia.github_user.adapter.SectionsPagerAdapter
 import bangkit.adhytia.github_user.databinding.ActivityDetailUserBinding
 import bangkit.adhytia.github_user.model.User
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailUserActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package bangkit.adhytia.github_user
+package bangkit.adhytia.github_user.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,9 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import bangkit.adhytia.github_user.viewmodel.MainViewModel
+import bangkit.adhytia.github_user.viewmodel.MainViewModelFactory
+import bangkit.adhytia.github_user.adapter.GridUserAdapter
 import bangkit.adhytia.github_user.databinding.ActivityMainBinding
 import bangkit.adhytia.github_user.model.User
 import bangkit.adhytia.github_user.repository.Repository

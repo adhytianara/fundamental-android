@@ -1,4 +1,4 @@
-package bangkit.adhytia.github_user
+package bangkit.adhytia.github_user.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
