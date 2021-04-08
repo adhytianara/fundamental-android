@@ -39,7 +39,7 @@ class FollowingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFollowingBinding.inflate(inflater, container, false)
         return (binding.root)
     }
@@ -57,6 +57,7 @@ class FollowingFragment : Fragment() {
             ViewModelProvider(this, followingViewModelFactory).get(FollowingViewModel::class.java)
 
         observeFollowingList(viewModel)
+        showLoading(true)
         username?.let { viewModel.getUserFollowing(it) }
 
         showRecyclerList()
@@ -64,7 +65,7 @@ class FollowingFragment : Fragment() {
 
     private fun observeFollowingList(viewModel: FollowingViewModel) {
         viewModel.followingList.observe(this, { response ->
-//            showLoading(false)
+            showLoading(false)
             if (response.isSuccessful) {
                 listFollowAdapter.setFollowList(response.body() as ArrayList<User>)
                 Log.d("FOLLOWER", response.body().toString())
@@ -81,10 +82,17 @@ class FollowingFragment : Fragment() {
 
         listFollowAdapter.setOnItemClickCallback(object : ListFollowAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
-//                showLoading(true)
-//                viewModel.getUserDetailsByUsername(data.username)
                 Toast.makeText(activity, "clicked", Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.progressBarFollowers.visibility = View.VISIBLE
+        } else {
+            binding.progressBarFollowers.visibility = View.GONE
+        }
     }
 }
