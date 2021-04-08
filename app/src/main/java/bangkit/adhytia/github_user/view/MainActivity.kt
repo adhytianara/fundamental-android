@@ -35,14 +35,15 @@ class MainActivity : AppCompatActivity() {
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 
-        showLoading(true)
-        viewModel.getUserList()
 
         observeUserList(viewModel)
         observeUser(viewModel)
         observeUserSearchResult(viewModel)
 
-        setSearchView()
+        showLoading(true)
+        viewModel.getUserList()
+
+        setupSearchView()
 
         showRecyclerGrid()
     }
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.searchView?.clearFocus()
     }
 
-    private fun setSearchView() {
+    private fun setupSearchView() {
         binding.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 showLoading(true)
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     viewModel.searchUserByUsername(p0)
                 }
-                return true
+                return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {

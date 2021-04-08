@@ -17,4 +17,12 @@ class Repository {
     suspend fun searchUserByUsername(username: String): Response<UserSearchResult> {
         return RetrofitInstance.api.searchUserByUsername(username)
     }
+
+    suspend fun getUserFollower(username: String): Response<List<User>> {
+        return RetrofitInstance.api.getUserFollower(username)
+    }
+
+    suspend fun getUserFollowing(username: String): Response<List<User>> {
+        return RetrofitInstance.api.getUserFollowing(username)
+    }
 }
