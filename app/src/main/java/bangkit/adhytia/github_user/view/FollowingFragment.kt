@@ -67,7 +67,11 @@ class FollowingFragment : Fragment() {
         viewModel.followingList.observe(this, { response ->
             showLoading(false)
             if (response.isSuccessful) {
-                listFollowAdapter.setFollowList(response.body() as ArrayList<User>)
+                val userList = response.body() as ArrayList<User>
+                listFollowAdapter.setFollowList(userList)
+                if (userList.isEmpty()) {
+                    showNoDataView(true)
+                }
                 Log.d("FOLLOWER", response.body().toString())
                 Log.d("FOLLOWER", response.headers().toString())
             } else {
@@ -87,12 +91,19 @@ class FollowingFragment : Fragment() {
         })
     }
 
-
     private fun showLoading(state: Boolean) {
         if (state) {
             binding.progressBarFollowers.visibility = View.VISIBLE
         } else {
             binding.progressBarFollowers.visibility = View.GONE
+        }
+    }
+
+    private fun showNoDataView(state: Boolean) {
+        if (state) {
+            binding.tvNoData.visibility = View.VISIBLE
+        } else {
+            binding.tvNoData.visibility = View.GONE
         }
     }
 }

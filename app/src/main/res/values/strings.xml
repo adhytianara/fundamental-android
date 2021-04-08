@@ -17,4 +17,5 @@
     <string name="what_is_github">What is GitHub?</string>
     <string name="github_user_list">GitHub user list :</string>
     <string name="github_desc">GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.</string>
+    <string name="no_data_can_be_displayed">No data can be displayed</string>
 </resources>

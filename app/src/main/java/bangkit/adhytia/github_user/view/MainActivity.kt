@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         binding.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 showLoading(true)
+                showNoDataView(false)
                 if (p0.isNullOrBlank()) {
                     viewModel.getUserList()
                 } else {
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
+                showNoDataView(false)
                 if (p0.isNullOrBlank()) {
                     showLoading(true)
                     viewModel.getUserList()
@@ -105,7 +107,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.userSearchResult.observe(this, { response ->
             showLoading(false)
             if (response.isSuccessful) {
-                gridUserAdapter.setUserList(response.body()?.userList as ArrayList<User>)
+                val userList = response.body()?.userList as ArrayList<User>
+                gridUserAdapter.setUserList(userList)
+                if (userList.isEmpty()) {
+                    showNoDataView(true)
+                }
                 Log.d("Response", response.body().toString())
             } else {
                 Log.e("Error", response.errorBody().toString())
@@ -143,6 +149,14 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar?.visibility = View.VISIBLE
         } else {
             binding.progressBar?.visibility = View.GONE
+        }
+    }
+
+    private fun showNoDataView(state: Boolean) {
+        if (state) {
+            binding.tvNoData!!.visibility = View.VISIBLE
+        } else {
+            binding.tvNoData!!.visibility = View.GONE
         }
     }
 }
