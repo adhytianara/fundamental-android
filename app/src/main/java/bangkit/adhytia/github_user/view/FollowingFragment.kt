@@ -1,15 +1,14 @@
 package bangkit.adhytia.github_user.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import bangkit.adhytia.github_user.R
 import bangkit.adhytia.github_user.adapter.ListFollowAdapter
 import bangkit.adhytia.github_user.databinding.FragmentFollowingBinding
 import bangkit.adhytia.github_user.model.User
@@ -57,6 +56,8 @@ class FollowingFragment : Fragment() {
             ViewModelProvider(this, followingViewModelFactory).get(FollowingViewModel::class.java)
 
         observeFollowingList(viewModel)
+        observeUser(viewModel)
+
         showLoading(true)
         username?.let { viewModel.getUserFollowing(it) }
 
@@ -80,15 +81,42 @@ class FollowingFragment : Fragment() {
         })
     }
 
+    private fun observeUser(viewModel: FollowingViewModel) {
+        viewModel.user.observe(this, { response ->
+            showLoading(false)
+            if (response.isSuccessful) {
+                val user = verifyUserData(response.body())
+                moveToDetailsPage(user!!)
+                Log.d("Response", response.body().toString())
+            } else {
+                Log.e("Error", response.errorBody().toString())
+            }
+        })
+    }
+
+    private fun verifyUserData(user: User?): User? {
+        user?.name = if (user?.name == null) "" else user.name
+        user?.company = if (user?.company == null) "" else user.company
+        user?.location = if (user?.location == null) "" else user.location
+        return user
+    }
+
     private fun showRecyclerList() {
         binding.rvUsers.layoutManager = LinearLayoutManager(activity)
         binding.rvUsers.adapter = listFollowAdapter
 
         listFollowAdapter.setOnItemClickCallback(object : ListFollowAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
-                Toast.makeText(activity, "clicked", Toast.LENGTH_LONG).show()
+                showLoading(true)
+                viewModel.getUserDetailsByUsername(data.username)
             }
         })
+    }
+
+    private fun moveToDetailsPage(user: User) {
+        val intent = Intent(activity, DetailUserActivity::class.java)
+        intent.putExtra(DetailUserActivity.EXTRA_USER, user)
+        startActivity(intent)
     }
 
     private fun showLoading(state: Boolean) {
