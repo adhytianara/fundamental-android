@@ -1,5 +1,6 @@
 package bangkit.adhytia.github_user.api
 
+import bangkit.adhytia.github_user.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -7,7 +8,7 @@ class GithubApiInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
             .newBuilder()
-            .addHeader("Authorization", "token 57cb3aebb2f2dee3dde0b7b1d823f12ac1576caa")
+            .addHeader("Authorization", BuildConfig.GITHUB_AUTHORIZATION_TOKEN)
             .build()
         return chain.proceed(request)
     }

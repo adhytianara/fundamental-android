@@ -73,10 +73,10 @@ class FollowingFragment : Fragment() {
                 if (userList.isEmpty()) {
                     showNoDataView(true)
                 }
-                Log.d("FOLLOWER", response.body().toString())
-                Log.d("FOLLOWER", response.headers().toString())
+                Log.d("FOLLOWING", response.body().toString())
+                Log.d("FOLLOWING", response.headers().toString())
             } else {
-                Log.e("Error FOLLOWER", response.errorBody().toString())
+                Log.e("Error FOLLOWING", response.errorBody().toString())
             }
         })
     }
@@ -87,9 +87,9 @@ class FollowingFragment : Fragment() {
             if (response.isSuccessful) {
                 val user = verifyUserData(response.body())
                 moveToDetailsPage(user!!)
-                Log.d("Response", response.body().toString())
+                Log.d("FOLLOWING", response.body().toString())
             } else {
-                Log.e("Error", response.errorBody().toString())
+                Log.e("Error FOLLOWING", response.errorBody().toString())
             }
         })
     }

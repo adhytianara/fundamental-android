@@ -8,12 +8,12 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import bangkit.adhytia.github_user.viewmodel.MainViewModel
-import bangkit.adhytia.github_user.viewmodel.MainViewModelFactory
 import bangkit.adhytia.github_user.adapter.GridUserAdapter
 import bangkit.adhytia.github_user.databinding.ActivityMainBinding
 import bangkit.adhytia.github_user.model.User
 import bangkit.adhytia.github_user.repository.Repository
+import bangkit.adhytia.github_user.viewmodel.MainViewModel
+import bangkit.adhytia.github_user.viewmodel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -50,11 +50,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        binding.searchView?.clearFocus()
+        binding.searchView.clearFocus()
     }
 
     private fun setupSearchView() {
-        binding.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 showLoading(true)
                 showNoDataView(false)
@@ -146,17 +146,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun showLoading(state: Boolean) {
         if (state) {
-            binding.progressBar?.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
         } else {
-            binding.progressBar?.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
         }
     }
 
     private fun showNoDataView(state: Boolean) {
         if (state) {
-            binding.tvNoData!!.visibility = View.VISIBLE
+            binding.tvNoData.visibility = View.VISIBLE
         } else {
-            binding.tvNoData!!.visibility = View.GONE
+            binding.tvNoData.visibility = View.GONE
         }
     }
 }

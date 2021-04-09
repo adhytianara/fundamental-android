@@ -25,6 +25,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "GITHUB_AUTHORIZATION_TOKEN", "\"" + getGithubAuthorizationToken() + "\"")
+        }
+        debug {
+            buildConfigField("String", "GITHUB_AUTHORIZATION_TOKEN", "\"" + getGithubAuthorizationToken() + "\"")
         }
     }
     compileOptions {
@@ -34,6 +38,14 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+}
+
+def getGithubAuthorizationToken() {
+    def keysFile = file("keys.properties")
+    def keysProperties = new Properties()
+    keysProperties.load(new FileInputStream(keysFile))
+    def githubAuthorizationToken = keysProperties['GITHUB_AUTHORIZATION_TOKEN']
+    return githubAuthorizationToken
 }
 
 dependencies {

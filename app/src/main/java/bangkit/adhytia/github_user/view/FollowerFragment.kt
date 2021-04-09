@@ -87,9 +87,9 @@ class FollowerFragment : Fragment() {
             if (response.isSuccessful) {
                 val user = verifyUserData(response.body())
                 moveToDetailsPage(user!!)
-                Log.d("Response", response.body().toString())
+                Log.d("FOLLOWER", response.body().toString())
             } else {
-                Log.e("Error", response.errorBody().toString())
+                Log.e("Error FOLLOWER", response.errorBody().toString())
             }
         })
     }
