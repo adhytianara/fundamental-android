@@ -23,7 +23,6 @@ class GridUserAdapter() :
                     .load(user.avatar)
                     .apply(RequestOptions().override(80, 80))
                     .into(imgPhoto)
-                tvName.text = user.name
                 tvUsername.text = user.username
             }
         }
