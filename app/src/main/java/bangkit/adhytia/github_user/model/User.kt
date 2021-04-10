@@ -14,4 +14,13 @@ data class User(
     @SerializedName("public_repos") var repository: Int,
     var followers: Int,
     var following: Int
-) : Parcelable
+) : Parcelable {
+    companion object {
+        fun verifyUserData(user: User?): User? {
+            user?.name = if (user?.name == null) "" else user.name
+            user?.company = if (user?.company == null) "" else user.company
+            user?.location = if (user?.location == null) "" else user.location
+            return user
+        }
+    }
+}

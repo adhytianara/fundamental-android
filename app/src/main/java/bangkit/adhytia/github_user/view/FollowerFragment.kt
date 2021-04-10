@@ -85,20 +85,13 @@ class FollowerFragment : Fragment() {
         viewModel.user.observe(this, { response ->
             showLoading(false)
             if (response.isSuccessful) {
-                val user = verifyUserData(response.body())
+                val user = User.verifyUserData(response.body())
                 moveToDetailsPage(user!!)
                 Log.d("FOLLOWER", response.body().toString())
             } else {
                 Log.e("Error FOLLOWER", response.errorBody().toString())
             }
         })
-    }
-
-    private fun verifyUserData(user: User?): User? {
-        user?.name = if (user?.name == null) "" else user.name
-        user?.company = if (user?.company == null) "" else user.company
-        user?.location = if (user?.location == null) "" else user.location
-        return user
     }
 
     private fun showRecyclerList() {
