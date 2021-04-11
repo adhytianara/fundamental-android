@@ -116,8 +116,8 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.elevation = 0f
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         if (isFavorite != (isInDatabase)) {
             if (isInDatabase) {
                 viewModel.delete(user)

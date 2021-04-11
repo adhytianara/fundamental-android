@@ -151,4 +151,9 @@ class MainActivity : AppCompatActivity() {
             binding.tvNoData.visibility = View.GONE
         }
     }
+
+    fun moveToFavoritePage(view: View) {
+        val intent = Intent(this@MainActivity, FavoriteActivity::class.java)
+        startActivity(intent)
+    }
 }
