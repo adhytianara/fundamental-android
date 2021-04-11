@@ -156,4 +156,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this@MainActivity, FavoriteActivity::class.java)
         startActivity(intent)
     }
+
+    fun moveToSettingPage(view: View) {
+        val intent = Intent(this@MainActivity, SettingActivity::class.java)
+        startActivity(intent)
+    }
 }

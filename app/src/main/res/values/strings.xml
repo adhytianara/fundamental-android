@@ -16,4 +16,6 @@
     <string name="favorite_page_title">My Favorite Github User</string>
     <string name="setting">Setting</string>
     <string name="favorite">Favorite</string>
+    <string name="reminder">reminder</string>
+    <string name="daily_reminder">Daily Reminder</string>
 </resources>
