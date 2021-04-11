@@ -50,7 +50,7 @@ class FollowerFragment : Fragment() {
 
         listFollowAdapter = ListFollowAdapter()
 
-        val repository = Repository()
+        val repository = Repository(context!!)
         val followerViewModelFactory = FollowerViewModelFactory(repository)
         viewModel =
             ViewModelProvider(this, followerViewModelFactory).get(FollowerViewModel::class.java)

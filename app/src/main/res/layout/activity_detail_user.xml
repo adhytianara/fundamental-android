@@ -59,12 +59,11 @@
         android:id="@+id/tv_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:textColor="@android:color/white"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_username"
+        app:layout_constraintTop_toBottomOf="@+id/img_favorite"
         tools:text="location" />
 
     <TextView
@@ -115,21 +114,30 @@
         android:id="@+id/img_follower"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:src="@drawable/ic_people_white"
         app:layout_constraintEnd_toEndOf="@+id/tv_follower"
         app:layout_constraintStart_toStartOf="@+id/tv_follower"
-        app:layout_constraintTop_toBottomOf="@+id/tv_company" />
+        app:layout_constraintTop_toTopOf="@+id/img_repo" />
 
     <ImageView
         android:id="@+id/img_following"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:src="@drawable/ic_people_white"
         app:layout_constraintEnd_toEndOf="@+id/tv_following"
         app:layout_constraintStart_toStartOf="@+id/tv_following"
-        app:layout_constraintTop_toBottomOf="@+id/tv_company" />
+        app:layout_constraintTop_toTopOf="@+id/img_repo" />
+
+    <ImageButton
+        android:id="@+id/img_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?android:selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_username"
+        app:srcCompat="@drawable/ic_baseline_favorite_border" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -152,5 +160,8 @@
         android:background="#1B1B1B"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabs" />
+        app:layout_constraintTop_toBottomOf="@+id/tabs">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

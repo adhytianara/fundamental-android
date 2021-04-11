@@ -9,10 +9,10 @@ import bangkit.adhytia.github_user.model.User
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user")
-    fun getAll(): List<User>
+    suspend fun getAll(): List<User>
 
     @Query("SELECT * FROM user WHERE username LIKE :username LIMIT 1")
-    fun findByUsername(username: String): User
+    suspend fun findByUsername(username: String): User
 
     @Insert
     suspend fun insertAll(vararg users: User)

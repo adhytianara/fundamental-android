@@ -18,7 +18,6 @@ import bangkit.adhytia.github_user.viewmodel.MainViewModelFactory
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var gridUserAdapter: GridUserAdapter
-
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvUsers.setHasFixedSize(true)
         gridUserAdapter = GridUserAdapter()
 
-        val repository = Repository()
+        val repository = Repository(this)
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
 

@@ -1,18 +1,27 @@
 package bangkit.adhytia.github_user.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import bangkit.adhytia.github_user.R
 import bangkit.adhytia.github_user.adapter.SectionsPagerAdapter
 import bangkit.adhytia.github_user.databinding.ActivityDetailUserBinding
 import bangkit.adhytia.github_user.model.User
+import bangkit.adhytia.github_user.repository.Repository
+import bangkit.adhytia.github_user.viewmodel.DetailViewModel
+import bangkit.adhytia.github_user.viewmodel.DetailViewModelFactory
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayoutMediator
 
-class DetailUserActivity : AppCompatActivity() {
+class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailUserBinding
+    private lateinit var viewModel: DetailViewModel
+    private lateinit var user: User
+    private var isFavorite = false
+    private var isInDatabase = false
 
     companion object {
         const val EXTRA_USER = "extra_user"
@@ -30,21 +39,50 @@ class DetailUserActivity : AppCompatActivity() {
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val user = intent.getParcelableExtra<User>(EXTRA_USER)
+        user = intent.getParcelableExtra(EXTRA_USER)
         title = user.name
+
+        val repository = Repository(this)
+        val viewModelFactory = DetailViewModelFactory(repository)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
+        observeUser(viewModel)
+
+        binding.imgFavorite.setOnClickListener(this)
 
         setUserData(user)
         setupViewPager(user.username)
     }
 
-    private fun setupViewPager(username: String) {
-        val sectionsPagerAdapter = SectionsPagerAdapter(this)
-        sectionsPagerAdapter.username = username
-        binding.viewPager.adapter = sectionsPagerAdapter
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = resources.getString(TAB_TITLES[position])
-        }.attach()
-        supportActionBar?.elevation = 0f
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.findByUsername(user.username)
+    }
+
+    private fun observeUser(viewModel: DetailViewModel) {
+        viewModel.user.observe(this, { user ->
+            isFavorite = user != null
+            isInDatabase = user != null
+            showButtonFavorite()
+        })
+    }
+
+    private fun showButtonFavorite() {
+        if (isFavorite) {
+            binding.imgFavorite.setImageResource(R.drawable.ic_baseline_favorite)
+        } else {
+            binding.imgFavorite.setImageResource(R.drawable.ic_baseline_favorite_border)
+        }
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0?.id) {
+            binding.imgFavorite.id -> {
+                isFavorite = !isFavorite
+                showButtonFavorite()
+            }
+        }
     }
 
     private fun setUserData(user: User) {
@@ -60,5 +98,26 @@ class DetailUserActivity : AppCompatActivity() {
         "${user.repository} repository".also { binding.tvRepository.text = it }
         "${user.followers} follower".also { binding.tvFollower.text = it }
         "${user.following} following".also { binding.tvFollowing.text = it }
+    }
+
+    private fun setupViewPager(username: String) {
+        val sectionsPagerAdapter = SectionsPagerAdapter(this)
+        sectionsPagerAdapter.username = username
+        binding.viewPager.adapter = sectionsPagerAdapter
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
+        supportActionBar?.elevation = 0f
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (isFavorite != (isInDatabase)) {
+            if (isInDatabase) {
+                viewModel.delete(user)
+            } else {
+                viewModel.insertAll(user)
+            }
+        }
     }
 }
