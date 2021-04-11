@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Github User\'s</string>
+    <string name="app_name">Github Users</string>
     <string name="users_name">Users Name</string>
     <string name="users_company">Users Company</string>
     <string name="title_activity_detail_user">DetailUserActivity</string>
