@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#131313"
+    android:background="@color/black"
     tools:context=".view.DetailUserActivity">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:textColor="#2BE8D6"
+        android:textColor="@color/green_title"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/repository"
-        android:textColor="#FF9800"
+        android:textColor="@color/yellow_sub_title"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/img_repo"
         app:layout_constraintHorizontal_bias="0.501"
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/following"
-        android:textColor="#FF9800"
+        android:textColor="@color/yellow_sub_title"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/tv_repository"
         app:layout_constraintTop_toBottomOf="@+id/img_following" />
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/follower"
-        android:textColor="#FF9800"
+        android:textColor="@color/yellow_sub_title"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/tv_repository"
         app:layout_constraintTop_toBottomOf="@+id/img_follower" />
@@ -144,20 +144,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="#131313"
+        android:background="@color/black_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_repository"
-        app:tabIndicatorColor="#FF9800"
-        app:tabRippleColor="#FF9800"
-        app:tabSelectedTextColor="#2BE8D6"
+        app:tabIndicatorColor="@color/yellow_sub_title"
+        app:tabRippleColor="@color/yellow_sub_title"
+        app:tabSelectedTextColor="@color/green_title"
         app:tabTextColor="@android:color/white" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:background="#1B1B1B"
+        android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabs">
