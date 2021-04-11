@@ -86,15 +86,21 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setUserData(user: User) {
-        binding.tvName.text = user.name
-        binding.tvUsername.text = user.username
+        if (user.name.isEmpty()) binding.tvName.visibility = View.GONE else binding.tvName.text =
+            user.name
+        if (user.username.isEmpty()) binding.tvUsername.visibility =
+            View.GONE else binding.tvUsername.text =
+            user.username
         Glide.with(this)
             .load(user.avatar)
             .apply(RequestOptions().override(80, 80))
             .into(binding.imgAvatar)
-        binding.tvCompany.text = user.company
-        binding.tvLocation.text = user.location
-        binding.tvCompany.text = user.company
+        if (user.company.isEmpty()) binding.tvCompany.visibility =
+            View.GONE else binding.tvCompany.text =
+            user.company
+        if (user.location.isEmpty()) binding.tvLocation.visibility =
+            View.GONE else binding.tvLocation.text =
+            user.location
         "${user.repository} repository".also { binding.tvRepository.text = it }
         "${user.followers} follower".also { binding.tvFollower.text = it }
         "${user.following} following".also { binding.tvFollowing.text = it }
