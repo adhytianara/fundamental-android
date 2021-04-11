@@ -21,7 +21,7 @@ class GridUserAdapter() :
             with(binding) {
                 Glide.with(itemView.context)
                     .load(user.avatar)
-                    .apply(RequestOptions().override(80, 80))
+                    .apply(RequestOptions().override(120, 120))
                     .into(imgPhoto)
                 tvUsername.text = user.username
             }
