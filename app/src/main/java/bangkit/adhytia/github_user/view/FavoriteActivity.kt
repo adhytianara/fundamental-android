@@ -42,11 +42,7 @@ class FavoriteActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        runBlocking {
-            launch {
-                viewModel.getAll()
-            }
-        }
+        viewModel.getAll()
     }
 
     private fun observeUserList(viewModel: FavoriteViewModel) {

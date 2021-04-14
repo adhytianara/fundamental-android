@@ -57,7 +57,7 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.findByUsername(user.username)
+        viewModel.getByUsername(user.username)
     }
 
     private fun observeUser(viewModel: DetailViewModel) {
@@ -120,9 +120,9 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
         super.onPause()
         if (isFavorite != (isInDatabase)) {
             if (isInDatabase) {
-                viewModel.delete(user)
+                viewModel.deleteByUsername(user.username)
             } else {
-                viewModel.insertAll(user)
+                viewModel.insert(user)
             }
         }
     }

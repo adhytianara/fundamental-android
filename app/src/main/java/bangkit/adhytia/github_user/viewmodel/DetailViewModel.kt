@@ -11,26 +11,26 @@ class DetailViewModel(private val repository: Repository) : ViewModel() {
 
     val user: MutableLiveData<User> = MutableLiveData()
 
-    fun findByUsername(username: String) {
+    fun getByUsername(username: String) {
         runBlocking {
             launch {
-                user.value = repository.findByUsername(username)
+                user.value = repository.getByUsername(username)
             }
         }
     }
 
-    fun insertAll(vararg users: User) {
+    fun insert(user: User) {
         runBlocking {
             launch {
-                repository.insertAll(*users)
+                repository.insert(user)
             }
         }
     }
 
-    fun delete(userToDelete: User) {
+    fun deleteByUsername(username: String) {
         runBlocking {
             launch {
-                repository.delete(userToDelete)
+                repository.deleteByUsername(username)
             }
         }
     }

@@ -54,7 +54,6 @@ class PreferenceFragment : PreferenceFragmentCompat(),
     }
 
     private fun setRepeatingAlarm() {
-        showLog("DEBUG", "setRepeatingAlarm")
         context?.let {
             alarmReceiver.setRepeatingAlarm(
                 it, AlarmReceiver.ALARM_TIME, AlarmReceiver.ALARM_MESSAGE
@@ -68,9 +67,5 @@ class PreferenceFragment : PreferenceFragmentCompat(),
                 it
             )
         }
-    }
-
-    private fun showLog(s: String, s1: String) {
-        Log.d(s, s1)
     }
 }
