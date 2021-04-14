@@ -2,12 +2,14 @@ package bangkit.adhytia.github_user.repository
 
 import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import bangkit.adhytia.github_user.api.RetrofitInstance
 import bangkit.adhytia.github_user.database.DatabaseContract
+import bangkit.adhytia.github_user.database.DatabaseContract.UserColumns.Companion.CONTENT_URI
+import bangkit.adhytia.github_user.database.UserDatabaseHelper
 import bangkit.adhytia.github_user.helper.MappingHelper
 import bangkit.adhytia.github_user.model.User
 import bangkit.adhytia.github_user.model.UserSearchResult
-import bangkit.adhytia.github_user.database.UserDatabaseHelper
 import retrofit2.Response
 
 class Repository(val context: Context) {
@@ -32,25 +34,18 @@ class Repository(val context: Context) {
         return RetrofitInstance.api.getUserFollowing(username)
     }
 
-    fun getAll(): List<User>? {
-        val userHelper = UserDatabaseHelper.getInstance(context)
-        userHelper.open()
-        val cursor = userHelper.queryAll()
-        val userList = MappingHelper.mapCursorToArrayList(cursor)
-        userHelper.close()
-        return userList
+    fun getAll(): List<User> {
+        val cursor = context.contentResolver.query(CONTENT_URI, null, null, null, null)
+        return MappingHelper.mapCursorToArrayList(cursor)
     }
 
     fun getByUsername(username: String): User? {
-        val userHelper = UserDatabaseHelper.getInstance(context)
-        userHelper.open()
-        val cursor = userHelper.getByUsername(username)
-        val user = MappingHelper.mapCursorToObject(cursor)
-        userHelper.close()
-        return user
+        val uriWithId = Uri.parse("$CONTENT_URI/$username")
+        val cursor = context.contentResolver.query(uriWithId, null, null, null, null)
+        return MappingHelper.mapCursorToObject(cursor)
     }
 
-    fun insert(user: User): Long {
+    fun insert(user: User) {
         val values = ContentValues()
 
         values.put(DatabaseContract.UserColumns.USERNAME, user.username)
@@ -62,18 +57,11 @@ class Repository(val context: Context) {
         values.put(DatabaseContract.UserColumns.FOLLOWERS, user.followers)
         values.put(DatabaseContract.UserColumns.FOLLOWING, user.following)
 
-        val userHelper = UserDatabaseHelper.getInstance(context)
-        userHelper.open()
-        val res = userHelper.insert(values)
-        userHelper.close()
-        return res
+        context.contentResolver.insert(CONTENT_URI, values)
     }
 
-    fun deleteByUsername(username: String): Int {
-        val userHelper = UserDatabaseHelper.getInstance(context)
-        userHelper.open()
-        val res = userHelper.deleteByUsername(username)
-        userHelper.close()
-        return res
+    fun deleteByUsername(username: String) {
+        val uriWithId = Uri.parse("$CONTENT_URI/$username")
+        context.contentResolver.delete(uriWithId, null, null)
     }
 }
