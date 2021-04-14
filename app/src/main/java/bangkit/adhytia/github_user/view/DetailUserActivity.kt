@@ -57,7 +57,7 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.findByUsername(user.username)
+        viewModel.findById(user.id)
     }
 
     private fun observeUser(viewModel: DetailViewModel) {
@@ -92,7 +92,7 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
             View.GONE else binding.tvUsername.text =
             user.username
         Glide.with(this)
-            .load(user.avatar)
+            .load(user.avatar_url)
             .apply(RequestOptions().override(80, 80))
             .into(binding.imgAvatar)
         if (user.company.isEmpty()) binding.tvCompany.visibility =
@@ -120,9 +120,9 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
         super.onPause()
         if (isFavorite != (isInDatabase)) {
             if (isInDatabase) {
-                viewModel.delete(user)
+                viewModel.deleteById(user.id)
             } else {
-                viewModel.insertAll(user)
+                viewModel.insert(user)
             }
         }
     }

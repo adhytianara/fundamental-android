@@ -21,7 +21,7 @@ class ListFavoriteAdapter() :
         fun bind(user: User) {
             with(binding) {
                 Glide.with(itemView.context)
-                    .load(user.avatar)
+                    .load(user.avatar_url)
                     .apply(RequestOptions().override(80, 80))
                     .into(imgAvatar)
                 tvUsernameFav.text = user.username

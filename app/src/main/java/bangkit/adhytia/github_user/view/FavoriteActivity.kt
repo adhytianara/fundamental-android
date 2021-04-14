@@ -50,13 +50,14 @@ class FavoriteActivity : AppCompatActivity() {
     }
 
     private fun observeUserList(viewModel: FavoriteViewModel) {
-        viewModel.userList.observe(this, { userList ->
-            if (userList.isNullOrEmpty()) {
-                showNoDataView(true)
-            } else {
-                listFavoriteAdapter.setFavoriteList(userList as ArrayList<User>)
-                showNoDataView(false)
-            }
+        viewModel.userList.observe(this, { usersCursor ->
+//            val userList = MappingHelper.mapCursorToArrayList(usersCursor)
+//            if (userList.isNullOrEmpty()) {
+//                showNoDataView(true)
+//            } else {
+//                listFavoriteAdapter.setFavoriteList(userList as ArrayList<User>)
+//                showNoDataView(false)
+//            }
         })
     }
 

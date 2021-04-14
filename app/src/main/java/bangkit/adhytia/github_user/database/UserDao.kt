@@ -1,5 +1,6 @@
 package bangkit.adhytia.github_user.database
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,14 +10,14 @@ import bangkit.adhytia.github_user.model.User
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user")
-    suspend fun getAll(): List<User>
+    fun selectAll(): Cursor
 
-    @Query("SELECT * FROM user WHERE username LIKE :username LIMIT 1")
-    suspend fun findByUsername(username: String): User
+    @Query("SELECT * FROM " + User.TABLE_NAME + " WHERE " + User.COLUMN_ID + " = :id")
+    fun selectById(id: Long): Cursor
 
     @Insert
-    suspend fun insertAll(vararg users: User)
+    fun insert(user: User): Long
 
     @Delete
-    suspend fun delete(user: User)
+    fun deleteById(id: Long): Int
 }

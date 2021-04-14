@@ -20,7 +20,7 @@ class ListFollowAdapter() :
         fun bind(user: User) {
             with(binding) {
                 Glide.with(itemView.context)
-                    .load(user.avatar)
+                    .load(user.avatar_url)
                     .apply(RequestOptions().override(50, 50))
                     .into(imgAvatar)
                 tvUsername.text = user.username

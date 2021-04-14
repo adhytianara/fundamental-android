@@ -1,5 +1,6 @@
 package bangkit.adhytia.github_user.viewmodel
 
+import android.database.Cursor
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import bangkit.adhytia.github_user.model.User
@@ -9,28 +10,28 @@ import kotlinx.coroutines.runBlocking
 
 class DetailViewModel(private val repository: Repository) : ViewModel() {
 
-    val user: MutableLiveData<User> = MutableLiveData()
+    val user: MutableLiveData<Cursor> = MutableLiveData()
 
-    fun findByUsername(username: String) {
+    fun findById(id: Long) {
         runBlocking {
             launch {
-                user.value = repository.findByUsername(username)
+                user.value = repository.findById(id)
             }
         }
     }
 
-    fun insertAll(vararg users: User) {
+    fun insert(user: User) {
         runBlocking {
             launch {
-                repository.insertAll(*users)
+                repository.insert(user)
             }
         }
     }
 
-    fun delete(userToDelete: User) {
+    fun deleteById(userId: Long) {
         runBlocking {
             launch {
-                repository.delete(userToDelete)
+                repository.deleteById(userId)
             }
         }
     }
