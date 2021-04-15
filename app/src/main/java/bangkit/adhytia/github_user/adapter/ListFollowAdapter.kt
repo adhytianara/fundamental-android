@@ -8,7 +8,7 @@ import bangkit.adhytia.github_user.model.User
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class ListFollowAdapter() :
+class ListFollowAdapter :
     RecyclerView.Adapter<ListFollowAdapter.ListViewHolder>() {
 
     private var listFollow: List<User> = emptyList()

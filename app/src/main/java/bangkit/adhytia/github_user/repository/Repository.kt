@@ -6,7 +6,6 @@ import android.net.Uri
 import bangkit.adhytia.github_user.api.RetrofitInstance
 import bangkit.adhytia.github_user.database.DatabaseContract
 import bangkit.adhytia.github_user.database.DatabaseContract.UserColumns.Companion.CONTENT_URI
-import bangkit.adhytia.github_user.database.UserDatabaseHelper
 import bangkit.adhytia.github_user.helper.MappingHelper
 import bangkit.adhytia.github_user.model.User
 import bangkit.adhytia.github_user.model.UserSearchResult

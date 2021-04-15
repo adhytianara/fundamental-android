@@ -9,7 +9,7 @@ import bangkit.adhytia.githubuserconsumerapp.model.User
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class ListFavoriteAdapter() :
+class ListFavoriteAdapter :
     RecyclerView.Adapter<ListFavoriteAdapter.ListViewHolder>() {
 
     private var listFavorite: List<User> = emptyList()

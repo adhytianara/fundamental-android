@@ -8,7 +8,7 @@ import bangkit.adhytia.github_user.model.User
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class GridUserAdapter() :
+class GridUserAdapter :
     RecyclerView.Adapter<GridUserAdapter.GridViewHolder>() {
 
     private var listUser: List<User> = emptyList()

@@ -13,8 +13,6 @@ import bangkit.adhytia.github_user.model.User
 import bangkit.adhytia.github_user.repository.Repository
 import bangkit.adhytia.github_user.viewmodel.FavoriteViewModel
 import bangkit.adhytia.github_user.viewmodel.FavoriteViewModelFactory
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class FavoriteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavoriteBinding

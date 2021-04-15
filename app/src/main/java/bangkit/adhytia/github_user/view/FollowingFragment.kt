@@ -50,7 +50,7 @@ class FollowingFragment : Fragment() {
 
         listFollowAdapter = ListFollowAdapter()
 
-        val repository = Repository(context!!)
+        val repository = Repository(requireContext())
         val followingViewModelFactory = FollowingViewModelFactory(repository)
         viewModel =
             ViewModelProvider(this, followingViewModelFactory).get(FollowingViewModel::class.java)
@@ -65,7 +65,7 @@ class FollowingFragment : Fragment() {
     }
 
     private fun observeFollowingList(viewModel: FollowingViewModel) {
-        viewModel.followingList.observe(this, { response ->
+        viewModel.followingList.observe(viewLifecycleOwner, { response ->
             showLoading(false)
             if (response.isSuccessful) {
                 val userList = response.body() as ArrayList<User>
@@ -82,7 +82,7 @@ class FollowingFragment : Fragment() {
     }
 
     private fun observeUser(viewModel: FollowingViewModel) {
-        viewModel.user.observe(this, { response ->
+        viewModel.user.observe(viewLifecycleOwner, { response ->
             showLoading(false)
             if (response.isSuccessful) {
                 val user = User.verifyUserData(response.body())
