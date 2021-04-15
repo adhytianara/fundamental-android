@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GithubUserConsumerApp</string>
+    <string name="title">Consumer App</string>
+    <string name="no_data_can_be_displayed">No data can be displayed</string>
+</resources>
