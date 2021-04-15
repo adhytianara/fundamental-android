@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import bangkit.adhytia.github_user.R
 import bangkit.adhytia.github_user.adapter.SectionsPagerAdapter
 import bangkit.adhytia.github_user.databinding.ActivityDetailUserBinding
+import bangkit.adhytia.github_user.helper.WidgetHelper
 import bangkit.adhytia.github_user.model.User
 import bangkit.adhytia.github_user.repository.Repository
 import bangkit.adhytia.github_user.viewmodel.DetailViewModel
@@ -124,6 +125,7 @@ class DetailUserActivity : AppCompatActivity(), View.OnClickListener {
             } else {
                 viewModel.insert(user)
             }
+            WidgetHelper.updateWidgetData(this)
         }
     }
 }

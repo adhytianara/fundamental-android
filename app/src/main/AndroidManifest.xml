@@ -20,6 +20,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUser">
+        <receiver android:name=".widget.FavoriteGithubUserWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_github_user_widget_info" />
+        </receiver>
+
+        <service
+            android:name="bangkit.adhytia.github_user.widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <provider
             android:name=".provider.FavoriteUserProvider"
             android:authorities="bangkit.adhytia.github_user"
