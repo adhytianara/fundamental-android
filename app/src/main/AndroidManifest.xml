@@ -23,7 +23,7 @@
         <provider
             android:name=".provider.FavoriteUserProvider"
             android:authorities="bangkit.adhytia.github_user"
-            android:enabled="true"
+            android:exported="true"
             android:readPermission="bangkit.adhytia.github_user.READ_DATABASE"
             android:writePermission="bangkit.adhytia.github_user.WRITE_DATABASE" />
 
