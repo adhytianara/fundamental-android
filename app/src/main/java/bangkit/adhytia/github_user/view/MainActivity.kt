@@ -9,11 +9,11 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import bangkit.adhytia.github_user.utils.Variables
 import bangkit.adhytia.github_user.adapter.GridUserAdapter
 import bangkit.adhytia.github_user.databinding.ActivityMainBinding
 import bangkit.adhytia.github_user.model.User
 import bangkit.adhytia.github_user.repository.Repository
+import bangkit.adhytia.github_user.utils.Variables
 import bangkit.adhytia.github_user.viewmodel.MainViewModel
 import bangkit.adhytia.github_user.viewmodel.MainViewModelFactory
 
@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var gridUserAdapter: GridUserAdapter
     private lateinit var viewModel: MainViewModel
+    private var isMoveToDetails = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        isMoveToDetails = false
         binding.searchView.clearFocus()
     }
 
@@ -104,7 +106,9 @@ class MainActivity : AppCompatActivity() {
             showLoading(false)
             if (response.isSuccessful) {
                 val user = User.verifyUserData(response.body())
-                moveToDetailsPage(user!!)
+                if (isMoveToDetails) {
+                    moveToDetailsPage(user!!)
+                }
             } else {
                 Log.e("Error", response.errorBody().toString())
             }
@@ -137,6 +141,7 @@ class MainActivity : AppCompatActivity() {
                 showConnectivityView(Variables.isNetworkConnected)
                 if (Variables.isNetworkConnected) {
                     showLoading(true)
+                    isMoveToDetails = true
                     viewModel.getUserDetailsByUsername(data.username)
                 }
             }
