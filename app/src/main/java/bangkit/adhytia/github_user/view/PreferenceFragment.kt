@@ -9,7 +9,7 @@ import bangkit.adhytia.github_user.utils.AlarmReceiver
 
 class PreferenceFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-    private lateinit var REMINDER: String
+    private lateinit var reminder: String
     private lateinit var alarmReceiver: AlarmReceiver
     private lateinit var isReminderPreference: SwitchPreference
 
@@ -21,13 +21,13 @@ class PreferenceFragment : PreferenceFragmentCompat(),
     }
 
     private fun init() {
-        REMINDER = resources.getString(R.string.reminder)
-        isReminderPreference = findPreference<SwitchPreference>(REMINDER) as SwitchPreference
+        reminder = resources.getString(R.string.reminder)
+        isReminderPreference = findPreference<SwitchPreference>(reminder) as SwitchPreference
     }
 
     private fun setSummaries() {
         val sh = preferenceManager.sharedPreferences
-        isReminderPreference.isChecked = sh.getBoolean(REMINDER, false)
+        isReminderPreference.isChecked = sh.getBoolean(reminder, false)
     }
 
     override fun onResume() {
@@ -41,8 +41,8 @@ class PreferenceFragment : PreferenceFragmentCompat(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key == REMINDER) {
-            val isActive = sharedPreferences.getBoolean(REMINDER, false)
+        if (key == reminder) {
+            val isActive = sharedPreferences.getBoolean(reminder, false)
             isReminderPreference.isChecked = isActive
             if (isActive) {
                 setRepeatingAlarm()
