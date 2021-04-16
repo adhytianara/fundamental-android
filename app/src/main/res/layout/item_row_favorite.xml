@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="5dp"
+    android:background="@color/black_2">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_fav"
+        app:layout_constraintVertical_bias="0.0"
+        tools:src="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tv_name_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/green_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/img_avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Adhytia Wana Putra" />
+
+    <TextView
+        android:id="@+id/tv_username_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/yellow_sub_title"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/img_avatar"
+        app:layout_constraintTop_toTopOf="@+id/img_avatar"
+        tools:text="adhytianara" />
+
+    <TextView
+        android:id="@+id/tv_company_fav"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/tv_location_fav"
+        app:layout_constraintTop_toBottomOf="@+id/tv_location_fav"
+        tools:text="Computer Science, Universitas Indonesia" />
+
+    <TextView
+        android:id="@+id/tv_location_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/tv_username_fav"
+        app:layout_constraintTop_toBottomOf="@+id/tv_username_fav"
+        tools:text="Depok, Indonesia" />
+</androidx.constraintlayout.widget.ConstraintLayout>

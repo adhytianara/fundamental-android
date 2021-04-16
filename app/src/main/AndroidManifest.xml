@@ -2,6 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bangkit.adhytia.github_user">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <permission
+        android:name="bangkit.adhytia.github_user.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="bangkit.adhytia.github_user.WRITE_DATABASE"
+        android:protectionLevel="normal" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +21,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUser">
+        <receiver android:name=".widget.FavoriteGithubUserWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_github_user_widget_info" />
+        </receiver>
+
+        <service
+            android:name="bangkit.adhytia.github_user.widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <provider
+            android:name=".provider.FavoriteUserProvider"
+            android:authorities="bangkit.adhytia.github_user"
+            android:exported="true"
+            android:readPermission="bangkit.adhytia.github_user.READ_DATABASE"
+            android:writePermission="bangkit.adhytia.github_user.WRITE_DATABASE" />
+
+        <receiver
+            android:name=".utils.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".view.SettingActivity"
+            android:theme="@style/PreferenceScreen" />
+        <activity android:name=".view.FavoriteActivity" />
+        <activity
+            android:name=".view.SplashScreenActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +61,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailUserActivity"
+            android:name=".view.DetailUserActivity"
             android:label="@string/title_activity_detail_user" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".view.MainActivity" />
     </application>
 
 </manifest>
