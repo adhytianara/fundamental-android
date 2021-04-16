@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import bangkit.adhytia.github_user.utils.Variables
 import bangkit.adhytia.github_user.adapter.ListFollowAdapter
 import bangkit.adhytia.github_user.databinding.FragmentFollowingBinding
 import bangkit.adhytia.github_user.model.User
@@ -58,10 +59,20 @@ class FollowingFragment : Fragment() {
         observeFollowingList(viewModel)
         observeUser(viewModel)
 
-        showLoading(true)
-        username?.let { viewModel.getUserFollowing(it) }
+        binding.btnConnectivity.setOnClickListener {
+            showConnectivityView(
+                Variables.isNetworkConnected,
+                username
+            )
+        }
 
         showRecyclerList()
+
+        showConnectivityView(Variables.isNetworkConnected, username)
+        if (Variables.isNetworkConnected) {
+            showLoading(true)
+            username?.let { viewModel.getUserFollowing(it) }
+        }
     }
 
     private fun observeFollowingList(viewModel: FollowingViewModel) {
@@ -97,8 +108,11 @@ class FollowingFragment : Fragment() {
 
         listFollowAdapter.setOnItemClickCallback(object : ListFollowAdapter.OnItemClickCallback {
             override fun onItemClicked(data: User) {
-                showLoading(true)
-                viewModel.getUserDetailsByUsername(data.username)
+                showConnectivityView(Variables.isNetworkConnected, data.username)
+                if (Variables.isNetworkConnected) {
+                    showLoading(true)
+                    viewModel.getUserDetailsByUsername(data.username)
+                }
             }
         })
     }
@@ -122,6 +136,19 @@ class FollowingFragment : Fragment() {
             binding.tvNoData.visibility = View.VISIBLE
         } else {
             binding.tvNoData.visibility = View.GONE
+        }
+    }
+
+    private fun showConnectivityView(state: Boolean, username: String?) {
+        if (state) {
+            binding.groupNoInternet.visibility = View.GONE
+            binding.rvUsers.visibility = View.VISIBLE
+            if (listFollowAdapter.listFollow.isEmpty()) {
+                username?.let { viewModel.getUserFollowing(it) }
+            }
+        } else {
+            binding.rvUsers.visibility = View.GONE
+            binding.groupNoInternet.visibility = View.VISIBLE
         }
     }
 }

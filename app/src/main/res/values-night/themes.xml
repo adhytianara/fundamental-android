@@ -14,6 +14,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="SearchView" parent="">
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:editTextColor">@android:color/darker_gray</item>
+    </style>
+
     <style name="ThemeOverlay.GithubUser.AppWidgetContainer" parent="">
         <item name="appWidgetBackgroundColor">@color/light_blue_900</item>
         <item name="appWidgetTextColor">@color/light_blue_200</item>

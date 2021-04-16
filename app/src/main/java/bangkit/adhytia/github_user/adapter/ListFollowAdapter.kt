@@ -11,7 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 class ListFollowAdapter :
     RecyclerView.Adapter<ListFollowAdapter.ListViewHolder>() {
 
-    private var listFollow: List<User> = emptyList()
+    var listFollow: List<User> = emptyList()
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 

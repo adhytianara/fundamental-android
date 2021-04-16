@@ -11,7 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 class GridUserAdapter :
     RecyclerView.Adapter<GridUserAdapter.GridViewHolder>() {
 
-    private var listUser: List<User> = emptyList()
+    var listUser: List<User> = emptyList()
 
     private lateinit var onItemClickCallback: OnItemClickCallback
 
